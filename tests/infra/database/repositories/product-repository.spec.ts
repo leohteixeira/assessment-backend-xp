@@ -104,4 +104,146 @@ describe('PgProductRepository', () => {
       expect(product.categories.length).toBe(1)
     })
   })
+
+  describe('findProducts()', () => {
+    test('Should return DatabaseDocument.List with an empty array of products', async () => {
+      const sut = makeSut()
+      const result = await sut.findProducts({
+        query: {}
+      })
+      expect(result.elements).toEqual([])
+      expect(result.totalElements).toBe(0)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of products', async () => {
+      await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const sut = makeSut()
+      let result = await sut.findProducts({
+        query: {}
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(1)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+
+      await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      result = await sut.findProducts({
+        query: {}
+      })
+      expect(result.elements.length).toBe(2)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of products passing search filter', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number(),
+        categories: [category]
+      })
+
+      await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+
+      const sut = makeSut()
+      let result = await sut.findProducts({
+        query: {
+          search: 'name',
+          searchValue: product.name
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(1)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+
+      result = await sut.findProducts({
+        query: {
+          search: 'name',
+          searchValue: 'wrong_name'
+        }
+      })
+      expect(result.elements.length).toBe(0)
+      expect(result.totalElements).toBe(0)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of products passing pagination filters', async () => {
+      await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const sut = makeSut()
+      let result = await sut.findProducts({
+        query: {
+          limit: 1,
+          page: 1
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(1)
+
+      result = await sut.findProducts({
+        query: {
+          limit: 1,
+          page: 2
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(2)
+
+      result = await sut.findProducts({
+        query: {
+          limit: 1,
+          page: 3
+        }
+      })
+      expect(result.elements.length).toBe(0)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(3)
+    })
+  })
 })
