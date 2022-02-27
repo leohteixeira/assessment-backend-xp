@@ -11,7 +11,7 @@ export namespace AddProduct {
     price: number
     description: string
     quantity: number
-    categoryId?: string
+    categoryId?: string[]
   }
   export type Result = Product.Model
 }
