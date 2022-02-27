@@ -1,5 +1,5 @@
 import { Product } from '@/domain/models'
-import { AddProduct } from '@/domain/usecases'
+import { AddProduct, FindProducts } from '@/domain/usecases'
 
 import { datatype, random, date } from 'faker'
 
@@ -20,4 +20,18 @@ export const mockAddProductParams = (): AddProduct.Params => ({
   price: datatype.number(),
   description: random.words(),
   quantity: datatype.number()
+})
+
+export const mockProductModels = (): Product.Model[] => [
+  mockProductModel(),
+  mockProductModel()
+]
+
+export const mockFindProductsParams = (): FindProducts.Params => ({
+  query: {
+    search: random.word(),
+    searchValue: random.word(),
+    limit: datatype.number(),
+    page: datatype.number()
+  }
 })
