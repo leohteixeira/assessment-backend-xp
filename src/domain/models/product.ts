@@ -6,7 +6,7 @@ export namespace Product {
     name: string
     sku: string
     price: number
-    description?: string
+    description: string
     quantity: number
     categories?: Category.Model[]
     createdAt: Date

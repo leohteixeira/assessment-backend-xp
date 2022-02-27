@@ -16,7 +16,7 @@ export class PgProduct {
   @Column()
   price: number
 
-  @Column({ nullable: true })
+  @Column()
   description: string
 
   @Column()

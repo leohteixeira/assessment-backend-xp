@@ -1,1 +1,1 @@
-export * from './add-group-validation-factory'
+export * from './add-product-validation-factory'
