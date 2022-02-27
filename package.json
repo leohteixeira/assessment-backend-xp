@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://bitbucket.org/leohteixeira/assessment-backend-xp/issues"
   },
-  "homepage": "https://bitbucket.org/leohteixeira/assessment-backend-xp#readme"
+  "homepage": "https://bitbucket.org/leohteixeira/assessment-backend-xp#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.1.1"
+  }
 }
