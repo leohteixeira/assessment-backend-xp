@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  db:
+    container_name: postgres-db-container
+    image: "postgres:9.6.1"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "webjump"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB: "webjump-test-db"
+
+  db-test:
+    container_name: postgres-test-container
+    image: "postgres:9.6.1"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_DB: "webjump-test-db"
+
