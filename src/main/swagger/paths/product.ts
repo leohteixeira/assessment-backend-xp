@@ -109,3 +109,40 @@ export const findProductsPath: OpenAPIV3.PathItemObject = {
     }
   }
 }
+
+export const findProductPath: OpenAPIV3.PathItemObject = {
+  get: {
+    tags: ['Products'],
+    summary: 'Requests a product information',
+    description: 'This route finds a product by id',
+    parameters: [
+      {
+        in: 'path',
+        name: 'productId',
+        description: 'Unique identifier of the product',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    responses: {
+      200: {
+        description: 'Ok',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/product'
+            }
+          }
+        }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}
