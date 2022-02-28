@@ -246,4 +246,32 @@ describe('PgProductRepository', () => {
       expect(result.currentPage).toBe(3)
     })
   })
+
+  describe('findProduct()', () => {
+    test('Should throw DatabaseError.NotFound if the product could not be found', async () => {
+      const productId = datatype.uuid()
+      const sut = makeSut()
+      const promise = sut.findProduct({ productId })
+      await expect(promise).rejects.toThrowError(DatabaseError.NotFound)
+    })
+
+    test('Should return Product.Model on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number(),
+        categories: [category]
+      })
+      const sut = makeSut()
+      const foundProduct = await sut.findProduct({ productId: product.id })
+      expect(foundProduct).toBeTruthy()
+      expect(foundProduct.id).toBeTruthy()
+    })
+  })
 })
