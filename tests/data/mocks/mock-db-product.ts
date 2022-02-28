@@ -1,4 +1,4 @@
-import { AddProductRepository, FindProductsRepository } from '@/data/protocols'
+import { AddProductRepository, FindProductsRepository, FindProductRepository } from '@/data/protocols'
 import { mockProductModel, mockProductModels } from '@/tests/domain/mocks'
 
 export class AddProductRepositorySpy implements AddProductRepository {
@@ -21,6 +21,16 @@ export class FindProductsRepositorySpy implements FindProductsRepository {
   }
 
   async findProducts (params: FindProductsRepository.Params): Promise<FindProductsRepository.Result> {
+    this.params = params
+    return this.result
+  }
+}
+
+export class FindProductRepositorySpy implements FindProductRepository {
+  params: FindProductRepository.Params
+  result: FindProductRepository.Result = mockProductModel()
+
+  async findProduct (params: FindProductRepository.Params): Promise<FindProductRepository.Result> {
     this.params = params
     return this.result
   }
