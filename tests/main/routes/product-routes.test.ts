@@ -43,4 +43,13 @@ describe('Product Routes', () => {
         .expect(200)
     })
   })
+
+  describe('GET /products', () => {
+    test('Should return 200 on success', async () => {
+      const app = await buildApp()
+      await request(app)
+        .get('/products')
+        .expect(200)
+    })
+  })
 })
