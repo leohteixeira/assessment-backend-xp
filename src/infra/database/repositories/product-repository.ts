@@ -1,11 +1,11 @@
 import { DatabaseError } from '@/data/errors'
-import { AddProductRepository, FindProductsRepository } from '@/data/protocols'
+import { AddProductRepository, FindProductRepository, FindProductsRepository } from '@/data/protocols'
 import { PgProduct, PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 
 import { getManager } from 'typeorm'
 
-export class PgProductRepository implements AddProductRepository, FindProductsRepository {
+export class PgProductRepository implements AddProductRepository, FindProductsRepository, FindProductRepository {
   async add (params: AddProductRepository.Params): Promise<AddProductRepository.Result> {
     try {
       let product
@@ -59,5 +59,18 @@ export class PgProductRepository implements AddProductRepository, FindProductsRe
       totalPages: result[1] === 0 ? 1 : Math.ceil(result[1] / pageSize),
       currentPage: page
     }
+  }
+
+  async findProduct (params: FindProductRepository.Params): Promise<FindProductRepository.Result> {
+    const productRepository = await PostgresHelper.getRepository(PgProduct)
+
+    const product = await productRepository.findOne({
+      join: { alias: 'product', leftJoinAndSelect: { categories: 'product.categories' } },
+      where: { id: params.productId }
+    })
+
+    if (!product) throw new DatabaseError.NotFound(`"${params.productId}" could not be found`)
+
+    return product
   }
 }
