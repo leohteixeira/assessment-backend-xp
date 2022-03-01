@@ -1,4 +1,4 @@
 # Para utilizar
-npm run up
-npm run build
-npm start
+- npm run up
+- npm run build
+- npm start
