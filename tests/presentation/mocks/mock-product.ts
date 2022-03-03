@@ -1,4 +1,4 @@
-import { AddProduct, EditProduct, FindProduct, FindProducts } from '@/domain/usecases'
+import { AddProduct, EditProduct, FindProduct, FindProducts, RemoveProduct } from '@/domain/usecases'
 import { mockProductModel, mockProductModels } from '@/tests/domain/mocks'
 
 export class AddProductSpy implements AddProduct {
@@ -43,5 +43,13 @@ export class EditProductSpy implements EditProduct {
   async edit (params: EditProduct.Params): Promise<EditProduct.Result> {
     this.params = params
     return this.result
+  }
+}
+
+export class RemoveProductSpy implements RemoveProduct {
+  params: RemoveProduct.Params
+
+  async remove (params: RemoveProduct.Params): Promise<RemoveProduct.Result> {
+    this.params = params
   }
 }
