@@ -1,11 +1,11 @@
 import { DatabaseError } from '@/data/errors'
-import { AddProductRepository, FindProductRepository, FindProductsRepository } from '@/data/protocols'
+import { AddProductRepository, EditProductRepository, FindProductRepository, FindProductsRepository } from '@/data/protocols'
 import { PgProduct, PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 
 import { getManager } from 'typeorm'
 
-export class PgProductRepository implements AddProductRepository, FindProductsRepository, FindProductRepository {
+export class PgProductRepository implements AddProductRepository, FindProductsRepository, FindProductRepository, EditProductRepository {
   async add (params: AddProductRepository.Params): Promise<AddProductRepository.Result> {
     try {
       let product
@@ -72,5 +72,33 @@ export class PgProductRepository implements AddProductRepository, FindProductsRe
     if (!product) throw new DatabaseError.NotFound(`"${params.productId}" could not be found`)
 
     return product
+  }
+
+  async editProduct (params: EditProductRepository.Params): Promise<EditProductRepository.Result> {
+    try {
+      let result
+      await getManager().transaction(async transactionalEntityManager => {
+        // Find product
+        const product = await transactionalEntityManager.getRepository(PgProduct).findOne({
+          join: { alias: 'product', leftJoinAndSelect: { categories: 'product.categories' } },
+          where: qb => {
+            qb.where({ id: params.productId })
+          }
+        })
+
+        // Update product
+        if (params.name) product.name = params.name
+        if (params.sku) product.sku = params.sku
+        if (params.price) product.price = params.price
+        if (params.description) product.description = params.description
+        if (params.quantity) product.quantity = params.quantity
+        if (params.categories) product.categories = await transactionalEntityManager.getRepository(PgCategory).findByIds(params.categories)
+
+        result = await transactionalEntityManager.getRepository(PgProduct).save(product)
+      })
+      return result
+    } catch (error) {
+      throw new DatabaseError.UpdateFail()
+    }
   }
 }

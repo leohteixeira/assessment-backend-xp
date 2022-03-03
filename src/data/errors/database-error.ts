@@ -18,4 +18,10 @@ export namespace DatabaseError {
       super('NotFound', message)
     }
   }
+
+  export class UpdateFail extends DatabaseError {
+    constructor (message = 'Database document update failed') {
+      super('UpdateFail', message)
+    }
+  }
 }
