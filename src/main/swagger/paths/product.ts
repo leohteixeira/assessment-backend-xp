@@ -216,3 +216,33 @@ export const editProductPath: OpenAPIV3.PathItemObject = {
     }
   }
 }
+
+export const deleteProductPath: OpenAPIV3.PathItemObject = {
+  delete: {
+    tags: ['Products'],
+    summary: 'Removes a product',
+    description: 'This route removes an existent product',
+    parameters: [
+      {
+        in: 'path',
+        name: 'productId',
+        description: 'Unique identifier of the product',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    responses: {
+      204: {
+        $ref: '#/components/noContent'
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}

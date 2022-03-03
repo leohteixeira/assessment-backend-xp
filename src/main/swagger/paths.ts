@@ -2,7 +2,8 @@ import {
   addProductPath,
   findProductsPath,
   findProductPath,
-  editProductPath
+  editProductPath,
+  deleteProductPath
 } from './paths/'
 
 export default {
@@ -10,5 +11,6 @@ export default {
   '/products/add-product': addProductPath,
   '/products': findProductsPath,
   '/products/{productId}': findProductPath,
-  '/products/edit-product/{productId}': editProductPath
+  '/products/edit-product/{productId}': editProductPath,
+  '/products/delete-product/{productId}': deleteProductPath
 }
