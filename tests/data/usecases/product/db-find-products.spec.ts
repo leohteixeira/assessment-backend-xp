@@ -3,8 +3,6 @@ import { FindProductsRepositorySpy } from '@/tests/data/mocks'
 import { mockFindProductsParams } from '@/tests/domain/mocks'
 import { throwError } from '@/tests/utils'
 
-import MockDate from 'mockdate'
-
 type SutTypes = {
   sut: DbFindProducts
   findProductsRepositorySpy: FindProductsRepositorySpy
@@ -20,14 +18,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbFindProducts Usecase', () => {
-  beforeAll(() => {
-    MockDate.set(new Date())
-  })
-
-  afterAll(() => {
-    MockDate.reset()
-  })
-
   test('Should call FindProductsRepository with correct values', async () => {
     const { sut, findProductsRepositorySpy } = makeSut()
     const params = mockFindProductsParams()
