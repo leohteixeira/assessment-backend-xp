@@ -274,4 +274,55 @@ describe('PgProductRepository', () => {
       expect(foundProduct.id).toBeTruthy()
     })
   })
+
+  describe('editProduct()', () => {
+    test('Should throw DatabaseError.UpdateFail if the cpf is already in use', async () => {
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const sut = makeSut()
+      const promise = sut.editProduct({ productId: product.id, categories: ['any_id'] })
+      await expect(promise).rejects.toThrowError(DatabaseError.UpdateFail)
+    })
+
+    test('Should return an updated product on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const category2 = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number(),
+        categories: [category]
+      })
+      const editProductParams = {
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number(),
+        categories: [category, category2]
+      }
+      const sut = makeSut()
+      const updatedProduct = await sut.editProduct({ productId: product.id, ...editProductParams })
+      expect(updatedProduct).toBeTruthy()
+      expect(updatedProduct.name).toBe(editProductParams.name)
+      expect(updatedProduct.sku).toBe(editProductParams.sku)
+      expect(updatedProduct.price).toBe(editProductParams.price)
+      expect(updatedProduct.description).toBe(editProductParams.description)
+      expect(updatedProduct.quantity).toBe(editProductParams.quantity)
+      expect(updatedProduct.categories.length).toBe(2)
+    })
+  })
 })
