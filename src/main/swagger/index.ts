@@ -19,6 +19,10 @@ export default {
     {
       name: 'Products',
       description: 'APIs related to products'
+    },
+    {
+      name: 'Categories',
+      description: 'APIs related to categories'
     }
   ],
   paths,
