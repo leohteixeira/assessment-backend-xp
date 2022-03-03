@@ -276,7 +276,7 @@ describe('PgProductRepository', () => {
   })
 
   describe('editProduct()', () => {
-    test('Should throw DatabaseError.UpdateFail if the cpf is already in use', async () => {
+    test('Should throw DatabaseError.UpdateFail if the update fails', async () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
@@ -323,6 +323,28 @@ describe('PgProductRepository', () => {
       expect(updatedProduct.description).toBe(editProductParams.description)
       expect(updatedProduct.quantity).toBe(editProductParams.quantity)
       expect(updatedProduct.categories.length).toBe(2)
+    })
+  })
+
+  describe('removeProduct()', () => {
+    test('Should throw DatabaseError.RemoveFail if the deletion fails', async () => {
+      const sut = makeSut()
+      const promise = sut.removeProduct({ productId: 'any_id' })
+      await expect(promise).rejects.toThrowError(DatabaseError.RemoveFail)
+    })
+
+    test('Should remove a product on success', async () => {
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const sut = makeSut()
+      await sut.removeProduct({ productId: product.id })
+      const removedProduct = await productRepository.findOne({ where: { id: product.id } })
+      expect(removedProduct).toBeFalsy()
     })
   })
 })
