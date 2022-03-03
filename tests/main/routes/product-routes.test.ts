@@ -68,4 +68,27 @@ describe('Product Routes', () => {
         .expect(200)
     })
   })
+
+  describe('PUT /products/add-product', () => {
+    test('Should return 200 on success', async () => {
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const app = await buildApp()
+      await request(app)
+        .put(`/products/edit-product/${product.id}`)
+        .send({
+          name: random.words(),
+          sku: random.words(),
+          price: datatype.number(),
+          description: random.words(),
+          quantity: datatype.number()
+        })
+        .expect(200)
+    })
+  })
 })
