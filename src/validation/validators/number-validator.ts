@@ -2,8 +2,8 @@ import { Invalidation } from '@/validation/helpers'
 import { Validator } from '@/validation/protocols'
 
 export type NumberValidatorParams = {
-  minLength?: number
-  maxLength?: number
+  minValue?: number
+  maxValue?: number
 }
 
 export class NumberValidator implements Validator {
@@ -13,11 +13,11 @@ export class NumberValidator implements Validator {
     if (typeof input !== 'number') {
       return Invalidation.type()
     }
-    if (this.params.minLength) {
-      if (input < this.params.minLength) { return Invalidation.minLength(this.params.minLength) }
+    if (this.params.minValue) {
+      if (input < this.params.minValue) { return Invalidation.minValue(this.params.minValue) }
     }
-    if (this.params.maxLength) {
-      if (input > this.params.maxLength) { return Invalidation.maxLength(this.params.maxLength) }
+    if (this.params.maxValue) {
+      if (input > this.params.maxValue) { return Invalidation.maxValue(this.params.maxValue) }
     }
   }
 }

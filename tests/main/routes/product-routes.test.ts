@@ -36,9 +36,9 @@ describe('Product Routes', () => {
         .send({
           name: random.words(),
           sku: random.words(),
-          price: datatype.number(),
+          price: datatype.number({ min: 1 }),
           description: random.words(),
-          quantity: datatype.number()
+          quantity: datatype.number({ min: 1 })
         })
         .expect(200)
     })
@@ -58,9 +58,9 @@ describe('Product Routes', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const app = await buildApp()
       await request(app)
@@ -74,9 +74,9 @@ describe('Product Routes', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const app = await buildApp()
       await request(app)
@@ -84,9 +84,9 @@ describe('Product Routes', () => {
         .send({
           name: random.words(),
           sku: random.words(),
-          price: datatype.number(),
+          price: datatype.number({ min: 1 }),
           description: random.words(),
-          quantity: datatype.number()
+          quantity: datatype.number({ min: 1 })
         })
         .expect(200)
     })
@@ -97,9 +97,9 @@ describe('Product Routes', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const app = await buildApp()
       await request(app)

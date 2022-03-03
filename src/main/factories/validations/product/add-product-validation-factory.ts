@@ -5,7 +5,7 @@ import { ArrayValidator, NumberValidator, RequiredValidator, TypeValidator, Uuid
 export const makeAddProductValidation = (): CompositeValidation<AddProductController.Request> => {
   const requiredValidator = new RequiredValidator()
   const stringValidator = new TypeValidator('string')
-  const numberValidator = new NumberValidator()
+  const numberValidator = new NumberValidator({ minValue: 1 })
   const uuidValidator = new UuidValidator()
   const uuidArrayValidator = new ArrayValidator({
     minLength: 0,

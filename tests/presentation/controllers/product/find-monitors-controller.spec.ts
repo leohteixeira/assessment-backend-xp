@@ -9,8 +9,8 @@ import { datatype, random } from 'faker'
 const mockRequest = (): FindProductsController.Request => ({
   search: random.word(),
   searchValue: random.word(),
-  limit: datatype.number(),
-  page: datatype.number()
+  limit: datatype.number({ min: 1 }),
+  page: datatype.number({ min: 1 })
 })
 
 type SutTypes = {

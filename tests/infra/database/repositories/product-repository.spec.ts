@@ -44,9 +44,9 @@ describe('PgProductRepository', () => {
       const promise = sut.add({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categoryId: [categoryId]
       })
       await expect(promise).rejects.toThrow(new DatabaseError.NotFound(`"${categoryId}" could not be found`))
@@ -58,16 +58,16 @@ describe('PgProductRepository', () => {
       await productRepository.save({
         name: name,
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const promise = sut.add({
         name: name,
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       await expect(promise).rejects.toThrowError(DatabaseError.InsertFail)
     })
@@ -77,9 +77,9 @@ describe('PgProductRepository', () => {
       const product = await sut.add({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       expect(product).toBeTruthy()
       expect(product.id).toBeTruthy()
@@ -94,9 +94,9 @@ describe('PgProductRepository', () => {
       const product = await sut.add({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categoryId: [category.id]
       })
       expect(product).toBeTruthy()
@@ -121,9 +121,9 @@ describe('PgProductRepository', () => {
       await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const sut = makeSut()
       let result = await sut.findProducts({
@@ -137,9 +137,9 @@ describe('PgProductRepository', () => {
       await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       result = await sut.findProducts({
         query: {}
@@ -158,18 +158,18 @@ describe('PgProductRepository', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categories: [category]
       })
 
       await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
 
       const sut = makeSut()
@@ -200,16 +200,16 @@ describe('PgProductRepository', () => {
       await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const sut = makeSut()
       let result = await sut.findProducts({
@@ -263,9 +263,9 @@ describe('PgProductRepository', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categories: [category]
       })
       const sut = makeSut()
@@ -280,9 +280,9 @@ describe('PgProductRepository', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const sut = makeSut()
       const promise = sut.editProduct({ productId: product.id, categories: ['any_id'] })
@@ -301,17 +301,17 @@ describe('PgProductRepository', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categories: [category]
       })
       const editProductParams = {
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number(),
+        quantity: datatype.number({ min: 1 }),
         categories: [category, category2]
       }
       const sut = makeSut()
@@ -337,9 +337,9 @@ describe('PgProductRepository', () => {
       const product = await productRepository.save({
         name: random.words(),
         sku: random.words(),
-        price: datatype.number(),
+        price: datatype.number({ min: 1 }),
         description: random.words(),
-        quantity: datatype.number()
+        quantity: datatype.number({ min: 1 })
       })
       const sut = makeSut()
       await sut.removeProduct({ productId: product.id })

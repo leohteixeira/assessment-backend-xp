@@ -4,33 +4,33 @@ import { NumberValidator, NumberValidatorParams } from '@/validation/validators'
 const makeSut = (params?: NumberValidatorParams): NumberValidator => new NumberValidator(params)
 
 describe('Number Validator', () => {
-  describe('minLength', () => {
-    const minLength = 3
+  describe('minValue', () => {
+    const minValue = 3
 
-    test('Should return invalid to number lower than minLength', async () => {
-      const sut = makeSut({ minLength })
+    test('Should return invalid to number lower than minValue', async () => {
+      const sut = makeSut({ minValue })
       const result = await sut.validate(2)
-      expect(result).toEqual(Invalidation.minLength(minLength))
+      expect(result).toEqual(Invalidation.minValue(minValue))
     })
 
-    test('Should return void to number equal or bigger then minLength', async () => {
-      const sut = makeSut({ minLength })
+    test('Should return void to number equal or bigger then minValue', async () => {
+      const sut = makeSut({ minValue })
       const result = await sut.validate(3)
       expect(result).toBeUndefined()
     })
   })
 
-  describe('maxLength', () => {
-    const maxLength = 3
+  describe('maxValue', () => {
+    const maxValue = 3
 
-    test('Should return invalid to number bigger then maxLength', async () => {
-      const sut = makeSut({ maxLength })
+    test('Should return invalid to number bigger then maxValue', async () => {
+      const sut = makeSut({ maxValue })
       const result = await sut.validate(4)
-      expect(result).toEqual(Invalidation.maxLength(maxLength))
+      expect(result).toEqual(Invalidation.maxValue(maxValue))
     })
 
-    test('Should return void to number equal or lower then maxLength', async () => {
-      const sut = makeSut({ maxLength })
+    test('Should return void to number equal or lower then maxValue', async () => {
+      const sut = makeSut({ maxValue })
       const result = await sut.validate(3)
       expect(result).toBeUndefined()
     })

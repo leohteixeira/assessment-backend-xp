@@ -7,9 +7,9 @@ export const mockProductModel = (): Product.Model => ({
   id: datatype.uuid(),
   name: random.words(),
   sku: random.words(),
-  price: datatype.number(),
+  price: datatype.number({ min: 1 }),
   description: random.words(),
-  quantity: datatype.number(),
+  quantity: datatype.number({ min: 1 }),
   createdAt: date.soon(),
   updatedAt: date.soon()
 })
@@ -17,9 +17,9 @@ export const mockProductModel = (): Product.Model => ({
 export const mockAddProductParams = (): AddProduct.Params => ({
   name: random.words(),
   sku: random.words(),
-  price: datatype.number(),
+  price: datatype.number({ min: 1 }),
   description: random.words(),
-  quantity: datatype.number()
+  quantity: datatype.number({ min: 1 })
 })
 
 export const mockProductModels = (): Product.Model[] => [
@@ -31,8 +31,8 @@ export const mockFindProductsParams = (): FindProducts.Params => ({
   query: {
     search: random.word(),
     searchValue: random.word(),
-    limit: datatype.number(),
-    page: datatype.number()
+    limit: datatype.number({ min: 1 }),
+    page: datatype.number({ min: 1 })
   }
 })
 
@@ -44,8 +44,8 @@ export const mockEditProductParams = (): EditProduct.Params => ({
   productId: datatype.uuid(),
   name: random.words(),
   sku: random.words(),
-  price: datatype.number(),
+  price: datatype.number({ min: 1 }),
   description: random.words(),
-  quantity: datatype.number(),
+  quantity: datatype.number({ min: 1 }),
   categories: [datatype.uuid()]
 })
