@@ -1,11 +1,11 @@
 import { DatabaseError } from '@/data/errors'
-import { AddProductRepository, EditProductRepository, FindProductRepository, FindProductsRepository } from '@/data/protocols'
+import { AddProductRepository, EditProductRepository, FindProductRepository, FindProductsRepository, RemoveProductRepository } from '@/data/protocols'
 import { PgProduct, PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 
 import { getManager } from 'typeorm'
 
-export class PgProductRepository implements AddProductRepository, FindProductsRepository, FindProductRepository, EditProductRepository {
+export class PgProductRepository implements AddProductRepository, FindProductsRepository, FindProductRepository, EditProductRepository, RemoveProductRepository {
   async add (params: AddProductRepository.Params): Promise<AddProductRepository.Result> {
     try {
       let product
@@ -99,6 +99,20 @@ export class PgProductRepository implements AddProductRepository, FindProductsRe
       return result
     } catch (error) {
       throw new DatabaseError.UpdateFail()
+    }
+  }
+
+  async removeProduct (params: RemoveProductRepository.Params): Promise<RemoveProductRepository.Result> {
+    try {
+      const productRepository = await PostgresHelper.getRepository(PgProduct)
+      await productRepository
+        .createQueryBuilder()
+        .delete()
+        .from(PgProduct)
+        .where({ id: params.productId })
+        .execute()
+    } catch (error) {
+      throw new DatabaseError.RemoveFail(String(error.stack))
     }
   }
 }
