@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types'
 
-export const productsPath: OpenAPIV3.PathItemObject = {
+export const addProductPath: OpenAPIV3.PathItemObject = {
   post: {
     tags: ['Products'],
     summary: 'Adds a new product',
@@ -126,6 +126,76 @@ export const findProductPath: OpenAPIV3.PathItemObject = {
         }
       }
     ],
+    responses: {
+      200: {
+        description: 'Ok',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/product'
+            }
+          }
+        }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}
+
+export const editProductPath: OpenAPIV3.PathItemObject = {
+  put: {
+    tags: ['Products'],
+    summary: 'Edits an existent product',
+    description: 'This route edits an existent product',
+    parameters: [
+      {
+        in: 'path',
+        name: 'productId',
+        description: 'Unique identifier of the product',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
+              },
+              sku: {
+                type: 'string'
+              },
+              price: {
+                type: 'number'
+              },
+              description: {
+                type: 'string'
+              },
+              quantity: {
+                type: 'number'
+              },
+              categories: {
+                type: 'array',
+                items: {
+                  type: 'string'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     responses: {
       200: {
         description: 'Ok',
