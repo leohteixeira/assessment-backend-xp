@@ -69,7 +69,7 @@ describe('Product Routes', () => {
     })
   })
 
-  describe('PUT /products/add-product', () => {
+  describe('PUT /products/edit-product/:productId', () => {
     test('Should return 200 on success', async () => {
       const product = await productRepository.save({
         name: random.words(),
@@ -89,6 +89,22 @@ describe('Product Routes', () => {
           quantity: datatype.number()
         })
         .expect(200)
+    })
+  })
+
+  describe('DELETE /products/delete-product/:productId', () => {
+    test('Should return 204 on success', async () => {
+      const product = await productRepository.save({
+        name: random.words(),
+        sku: random.words(),
+        price: datatype.number(),
+        description: random.words(),
+        quantity: datatype.number()
+      })
+      const app = await buildApp()
+      await request(app)
+        .delete(`/products/delete-product/${product.id}`)
+        .expect(204)
     })
   })
 })
