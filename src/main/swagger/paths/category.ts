@@ -186,3 +186,33 @@ export const editCategoryPath: OpenAPIV3.PathItemObject = {
     }
   }
 }
+
+export const deleteCategoryPath: OpenAPIV3.PathItemObject = {
+  delete: {
+    tags: ['Categories'],
+    summary: 'Removes a category',
+    description: 'This route removes an existent category',
+    parameters: [
+      {
+        in: 'path',
+        name: 'categoryId',
+        description: 'Unique identifier of the category',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    responses: {
+      204: {
+        $ref: '#/components/noContent'
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}
