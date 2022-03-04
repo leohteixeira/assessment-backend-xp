@@ -37,4 +37,17 @@ describe('Category Routes', () => {
         .expect(200)
     })
   })
+
+  describe('GET /categories/:categoryId', () => {
+    test('Should return 200 on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const app = await buildApp()
+      await request(app)
+        .get(`/categories/${category.id}`)
+        .expect(200)
+    })
+  })
 })
