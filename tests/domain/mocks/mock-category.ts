@@ -1,5 +1,5 @@
 import { Category } from '@/domain/models'
-import { AddCategory, FindCategory } from '@/domain/usecases'
+import { AddCategory, FindCategory, FindCategories } from '@/domain/usecases'
 
 import { datatype, date, random } from 'faker'
 
@@ -9,6 +9,20 @@ export const mockCategoryModel = (): Category.Model => ({
   name: random.words(),
   createdAt: date.soon(),
   updatedAt: date.soon()
+})
+
+export const mockCategoryModels = (): Category.Model[] => [
+  mockCategoryModel(),
+  mockCategoryModel()
+]
+
+export const mockFindCategoriesParams = (): FindCategories.Params => ({
+  query: {
+    search: random.word(),
+    searchValue: random.word(),
+    limit: datatype.number({ min: 1 }),
+    page: datatype.number({ min: 1 })
+  }
 })
 
 export const mockAddCategoryParams = (): AddCategory.Params => ({
