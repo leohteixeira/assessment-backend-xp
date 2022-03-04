@@ -6,7 +6,8 @@ import {
   deleteProductPath,
   addCategoryPath,
   findCategoryPath,
-  findCategoriesPath
+  findCategoriesPath,
+  editCategoryPath
 } from './paths/'
 
 export default {
@@ -20,5 +21,6 @@ export default {
   // Categories
   '/categories/add-category': addCategoryPath,
   '/categories/{categoryId}': findCategoryPath,
-  '/categories': findCategoriesPath
+  '/categories': findCategoriesPath,
+  '/categories/edit-category/{categoryId}': editCategoryPath
 }

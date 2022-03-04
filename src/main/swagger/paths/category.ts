@@ -131,3 +131,58 @@ export const findCategoriesPath: OpenAPIV3.PathItemObject = {
     }
   }
 }
+
+export const editCategoryPath: OpenAPIV3.PathItemObject = {
+  put: {
+    tags: ['Categories'],
+    summary: 'Edits an existent category',
+    description: 'This route edits an existent category',
+    parameters: [
+      {
+        in: 'path',
+        name: 'categoryId',
+        description: 'Unique identifier of the category',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
+              },
+              code: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: 'Ok',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/category'
+            }
+          }
+        }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}
