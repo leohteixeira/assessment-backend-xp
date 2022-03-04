@@ -1,9 +1,9 @@
 import { DatabaseError } from '@/data/errors'
-import { AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository } from '@/data/protocols'
+import { AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository, RemoveCategoryRepository } from '@/data/protocols'
 import { PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 
-export class PgCategoryRepository implements AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository {
+export class PgCategoryRepository implements AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository, RemoveCategoryRepository {
   async add (params: AddCategoryRepository.Params): Promise<AddCategoryRepository.Result> {
     try {
       const categoryRepository = await PostgresHelper.getRepository(PgCategory)
@@ -61,6 +61,20 @@ export class PgCategoryRepository implements AddCategoryRepository, FindCategory
       return result
     } catch (error) {
       throw new DatabaseError.UpdateFail()
+    }
+  }
+
+  async removeCategory (params: RemoveCategoryRepository.Params): Promise<RemoveCategoryRepository.Result> {
+    try {
+      const categoryRepository = await PostgresHelper.getRepository(PgCategory)
+      await categoryRepository
+        .createQueryBuilder()
+        .delete()
+        .from(PgCategory)
+        .where({ id: params.categoryId })
+        .execute()
+    } catch (error) {
+      throw new DatabaseError.RemoveFail(String(error.stack))
     }
   }
 }
