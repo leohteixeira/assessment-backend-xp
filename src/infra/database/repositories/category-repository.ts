@@ -1,9 +1,9 @@
 import { DatabaseError } from '@/data/errors'
-import { AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository } from '@/data/protocols'
+import { AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository } from '@/data/protocols'
 import { PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 
-export class PgCategoryRepository implements AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository {
+export class PgCategoryRepository implements AddCategoryRepository, FindCategoryRepository, FindCategoriesRepository, EditCategoryRepository {
   async add (params: AddCategoryRepository.Params): Promise<AddCategoryRepository.Result> {
     try {
       const categoryRepository = await PostgresHelper.getRepository(PgCategory)
@@ -44,6 +44,23 @@ export class PgCategoryRepository implements AddCategoryRepository, FindCategory
       totalElements: result[1],
       totalPages: result[1] === 0 ? 1 : Math.ceil(result[1] / pageSize),
       currentPage: page
+    }
+  }
+
+  async editCategory (params: EditCategoryRepository.Params): Promise<EditCategoryRepository.Result> {
+    try {
+      const categoryRepository = await PostgresHelper.getRepository(PgCategory)
+      const category = await categoryRepository.findOne({ where: { id: params.categoryId } })
+
+      // Update category
+      if (params.name) category.name = params.name
+      if (params.code) category.code = params.code
+
+      const result = await categoryRepository.save(category)
+
+      return result
+    } catch (error) {
+      throw new DatabaseError.UpdateFail()
     }
   }
 }
