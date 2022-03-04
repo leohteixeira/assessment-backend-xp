@@ -76,4 +76,17 @@ describe('Category Routes', () => {
         .expect(200)
     })
   })
+
+  describe('DELETE /categories/delete-category/:categoryId', () => {
+    test('Should return 204 on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const app = await buildApp()
+      await request(app)
+        .delete(`/categories/delete-category/${category.id}`)
+        .expect(204)
+    })
+  })
 })
