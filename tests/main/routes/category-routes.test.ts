@@ -59,4 +59,21 @@ describe('Category Routes', () => {
         .expect(200)
     })
   })
+
+  describe('PUT /categories/edit-category/:categoryId', () => {
+    test('Should return 200 on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const app = await buildApp()
+      await request(app)
+        .put(`/categories/edit-category/${category.id}`)
+        .send({
+          name: random.words(),
+          code: random.words()
+        })
+        .expect(200)
+    })
+  })
 })
