@@ -8,11 +8,7 @@ export namespace EditCategory {
   export type Params = {
     categoryId: string
     name?: string
-    sku?: string
-    price?: number
-    description?: string
-    quantity?: number
-    categories?: string[]
+    code?: string
   }
   export type Result = Category.Model
 }
