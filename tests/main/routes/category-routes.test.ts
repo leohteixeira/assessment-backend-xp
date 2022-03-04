@@ -50,4 +50,13 @@ describe('Category Routes', () => {
         .expect(200)
     })
   })
+
+  describe('GET /categories', () => {
+    test('Should return 200 on success', async () => {
+      const app = await buildApp()
+      await request(app)
+        .get('/categories')
+        .expect(200)
+    })
+  })
 })
