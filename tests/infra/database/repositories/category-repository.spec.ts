@@ -234,4 +234,23 @@ describe('PgCategoryRepository', () => {
       expect(updatedCategory.code).toBe(editCategoryParams.code)
     })
   })
+
+  describe('removeCategory()', () => {
+    test('Should throw DatabaseError.RemoveFail if the deletion fails', async () => {
+      const sut = makeSut()
+      const promise = sut.removeCategory({ categoryId: 'any_id' })
+      await expect(promise).rejects.toThrowError(DatabaseError.RemoveFail)
+    })
+
+    test('Should remove a category on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const sut = makeSut()
+      await sut.removeCategory({ categoryId: category.id })
+      const removedCategory = await categoryRepository.findOne({ where: { id: category.id } })
+      expect(removedCategory).toBeFalsy()
+    })
+  })
 })
