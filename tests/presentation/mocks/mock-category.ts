@@ -1,4 +1,4 @@
-import { AddCategory, EditCategory, FindCategories, FindCategory } from '@/domain/usecases'
+import { AddCategory, EditCategory, FindCategories, FindCategory, RemoveCategory } from '@/domain/usecases'
 import { mockCategoryModel, mockCategoryModels } from '@/tests/domain/mocks'
 
 export class AddCategorySpy implements AddCategory {
@@ -43,5 +43,13 @@ export class EditCategorySpy implements EditCategory {
   async edit (params: EditCategory.Params): Promise<EditCategory.Result> {
     this.params = params
     return this.result
+  }
+}
+
+export class RemoveCategorySpy implements RemoveCategory {
+  params: RemoveCategory.Params
+
+  async remove (params: RemoveCategory.Params): Promise<RemoveCategory.Result> {
+    this.params = params
   }
 }
