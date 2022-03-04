@@ -1,5 +1,5 @@
 import { Category } from '@/domain/models'
-import { AddCategory, FindCategory, FindCategories } from '@/domain/usecases'
+import { AddCategory, FindCategory, FindCategories, EditCategory } from '@/domain/usecases'
 
 import { datatype, date, random } from 'faker'
 
@@ -32,4 +32,10 @@ export const mockAddCategoryParams = (): AddCategory.Params => ({
 
 export const mockFindCategoryParams = (): FindCategory.Params => ({
   categoryId: datatype.uuid()
+})
+
+export const mockEditCategoryParams = (): EditCategory.Params => ({
+  categoryId: datatype.uuid(),
+  code: random.words(),
+  name: random.words()
 })
