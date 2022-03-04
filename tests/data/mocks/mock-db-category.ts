@@ -1,4 +1,4 @@
-import { AddCategoryRepository, FindCategoriesRepository, FindCategoryRepository, EditCategoryRepository } from '@/data/protocols'
+import { AddCategoryRepository, FindCategoriesRepository, FindCategoryRepository, EditCategoryRepository, RemoveCategoryRepository } from '@/data/protocols'
 import { mockCategoryModel, mockCategoryModels } from '@/tests/domain/mocks'
 
 export class AddCategoryRepositorySpy implements AddCategoryRepository {
@@ -43,5 +43,13 @@ export class EditCategoryRepositorySpy implements EditCategoryRepository {
   async editCategory (params: EditCategoryRepository.Params): Promise<EditCategoryRepository.Result> {
     this.params = params
     return this.result
+  }
+}
+
+export class RemoveCategoryRepositorySpy implements RemoveCategoryRepository {
+  params: RemoveCategoryRepository.Params
+
+  async removeCategory (params: RemoveCategoryRepository.Params): Promise<RemoveCategoryRepository.Result> {
+    this.params = params
   }
 }
