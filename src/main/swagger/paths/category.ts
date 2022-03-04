@@ -81,3 +81,53 @@ export const findCategoryPath: OpenAPIV3.PathItemObject = {
     }
   }
 }
+
+export const findCategoriesPath: OpenAPIV3.PathItemObject = {
+  get: {
+    tags: ['Categories'],
+    summary: 'Requests a category list',
+    description: 'This route returns all categories or a filtered list of categories',
+    parameters: [
+      'searchQuery',
+      'searchValueQuery',
+      'limitQuery',
+      'pageQuery'
+    ].map((param) => ({ $ref: `#/schemas/${param}` })),
+    responses: {
+      200: {
+        description: 'Ok',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                elements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/schemas/category'
+                  }
+                },
+                totalElements: {
+                  type: 'number'
+                },
+                totalPages: {
+                  type: 'number'
+                },
+                currentPage: {
+                  type: 'number'
+                }
+              },
+              required: ['elements', 'totalElements', 'totalPages', 'currentPage']
+            }
+          }
+        }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
+}
