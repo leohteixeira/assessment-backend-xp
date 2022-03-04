@@ -11,6 +11,7 @@ import path from 'path'
 
 let categoryRepository: Repository<any>
 let productRepository: Repository<any>
+let productsCategoriesCategoriesRepository: Repository<any>
 
 const makeSut = (): PgCategoryRepository => {
   return new PgCategoryRepository()
@@ -32,6 +33,8 @@ describe('PgCategoryRepository', () => {
     await categoryRepository.delete({})
     productRepository = await PostgresHelper.getRepository(PgProduct)
     await productRepository.delete({})
+    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository('products_categories_categories')
+    await productsCategoriesCategoriesRepository.delete({})
   })
 
   describe('add()', () => {
@@ -86,6 +89,125 @@ describe('PgCategoryRepository', () => {
       expect(foundCategory).toBeTruthy()
       expect(foundCategory.id).toBeTruthy()
       expect(foundCategory.id).toBe(category.id)
+    })
+  })
+
+  describe('findCategories()', () => {
+    test('Should return DatabaseDocument.List with an empty array of categories', async () => {
+      const sut = makeSut()
+      const result = await sut.findCategories({
+        query: {}
+      })
+      expect(result.elements).toEqual([])
+      expect(result.totalElements).toBe(0)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of categories', async () => {
+      await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const sut = makeSut()
+      let result = await sut.findCategories({
+        query: {}
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(1)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+
+      await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      result = await sut.findCategories({
+        query: {}
+      })
+      expect(result.elements.length).toBe(2)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of categories passing search filter', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+
+      await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+
+      const sut = makeSut()
+      let result = await sut.findCategories({
+        query: {
+          search: 'name',
+          searchValue: category.name
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(1)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+
+      result = await sut.findCategories({
+        query: {
+          search: 'name',
+          searchValue: 'wrong_name'
+        }
+      })
+      expect(result.elements.length).toBe(0)
+      expect(result.totalElements).toBe(0)
+      expect(result.totalPages).toBe(1)
+      expect(result.currentPage).toBe(1)
+    })
+
+    test('Should return DatabaseDocument.List with an array of categories passing pagination filters', async () => {
+      await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const sut = makeSut()
+      let result = await sut.findCategories({
+        query: {
+          limit: 1,
+          page: 1
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(1)
+
+      result = await sut.findCategories({
+        query: {
+          limit: 1,
+          page: 2
+        }
+      })
+      expect(result.elements.length).toBe(1)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(2)
+
+      result = await sut.findCategories({
+        query: {
+          limit: 1,
+          page: 3
+        }
+      })
+      expect(result.elements.length).toBe(0)
+      expect(result.totalElements).toBe(2)
+      expect(result.totalPages).toBe(2)
+      expect(result.currentPage).toBe(3)
     })
   })
 })
