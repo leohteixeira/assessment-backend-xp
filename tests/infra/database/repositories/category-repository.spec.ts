@@ -210,4 +210,28 @@ describe('PgCategoryRepository', () => {
       expect(result.currentPage).toBe(3)
     })
   })
+
+  describe('editCategory()', () => {
+    test('Should throw DatabaseError.UpdateFail if the update fails', async () => {
+      const sut = makeSut()
+      const promise = sut.editCategory({ categoryId: 'any_id' })
+      await expect(promise).rejects.toThrowError(DatabaseError.UpdateFail)
+    })
+
+    test('Should return an updated category on success', async () => {
+      const category = await categoryRepository.save({
+        name: random.words(),
+        code: random.words()
+      })
+      const editCategoryParams = {
+        name: random.words(),
+        code: random.words()
+      }
+      const sut = makeSut()
+      const updatedCategory = await sut.editCategory({ categoryId: category.id, ...editCategoryParams })
+      expect(updatedCategory).toBeTruthy()
+      expect(updatedCategory.name).toBe(editCategoryParams.name)
+      expect(updatedCategory.code).toBe(editCategoryParams.code)
+    })
+  })
 })
