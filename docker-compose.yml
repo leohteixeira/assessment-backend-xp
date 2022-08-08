@@ -5,19 +5,10 @@ services:
     image: "postgres:13"
     restart: always
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: "webjump"
       POSTGRES_PASSWORD: "secret"
-      POSTGRES_DB: "webjump-pg-db"
-
-  db-test:
-    container_name: postgres-test-container
-    image: "postgres:13"
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "test"
-      POSTGRES_PASSWORD: "test"
-      POSTGRES_DB: "webjump-test-db"
+      POSTGRES_DB: "webjump_pg_db"
+    volumes:
+      - ./.docker/db_data:/var/lib/postgresql/data
