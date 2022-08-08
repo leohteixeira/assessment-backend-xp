@@ -1,12 +1,12 @@
 import { PgProduct } from '@/infra/database/entities'
 import { PostgresHelper as sut } from '@/infra/database/helpers'
-import { testEnv } from '@/tests/utils'
+import { env } from '@/main/config'
 
 import path from 'path'
 
 describe('Postgres Helper', () => {
   beforeAll(async () => {
-    await sut.connect(testEnv.postgresTestHost, testEnv.postgresTestPort, testEnv.postgresTestUsername, testEnv.postgresTestPassword, testEnv.postgresTestDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await sut.connect(env.postgresHost, env.postgresPort, env.postgresUsername, env.postgresPassword, env.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
   })
 
   afterAll(async () => {

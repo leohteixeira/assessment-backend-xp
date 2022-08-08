@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { PgProduct } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers/postgres-helper'
-import { buildApp } from '@/main/config'
-import { testEnv } from '@/tests/utils'
+import { buildApp, env } from '@/main/config'
 
 import { datatype, random } from 'faker'
 import path from 'path'
@@ -14,7 +13,7 @@ let productsCategoriesCategoriesRepository: Repository<any>
 
 describe('Product Routes', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(testEnv.postgresTestHost, testEnv.postgresTestPort, testEnv.postgresTestUsername, testEnv.postgresTestPassword, testEnv.postgresTestDatabase, [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(env.postgresHost, env.postgresPort, env.postgresUsername, env.postgresPassword, env.postgresDatabase, [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')], true)
   })
 
   afterAll(async () => {
