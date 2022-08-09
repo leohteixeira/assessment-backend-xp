@@ -1,7 +1,7 @@
-export const env = {
+export const testEnv = {
   port: Number(process.env.PORT) || 3030,
 
-  postgresHost: process.env.POSTGRES_HOST || 'db',
+  postgresHost: process.env.POSTGRES_HOST || 'localhost',
   postgresPort: Number(process.env.POSTGRES_PORT) || 5432,
   postgresUsername: process.env.POSTGRES_USERNAME || 'webjump',
   postgresPassword: process.env.POSTGRES_PASSWORD || 'secret',

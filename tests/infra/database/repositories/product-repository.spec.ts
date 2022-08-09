@@ -2,7 +2,7 @@ import { DatabaseError } from '@/data/errors'
 import { PgProduct, PgCategory } from '@/infra/database/entities'
 import { PostgresHelper } from '@/infra/database/helpers'
 import { PgProductRepository } from '@/infra/database/repositories'
-import { env } from '@/main/config'
+import { testEnv } from '@/tests/utils'
 
 import { Repository } from 'typeorm'
 import { random, datatype } from 'faker'
@@ -19,7 +19,7 @@ const makeSut = (): PgProductRepository => {
 
 describe('PgProductRepository', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(env.postgresHost, env.postgresPort, env.postgresUsername, env.postgresPassword, env.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
     MockDate.set(new Date())
   })
 
