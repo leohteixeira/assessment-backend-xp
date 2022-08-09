@@ -18,7 +18,7 @@ $ npm run up
 
 ### Desligue o servidor
 ```bash 
-$ npm run up
+$ npm run down
 ```
 
 ### O servidor inciará na porta:3030
