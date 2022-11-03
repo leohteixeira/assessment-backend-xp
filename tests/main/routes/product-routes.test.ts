@@ -14,7 +14,16 @@ let productsCategoriesCategoriesRepository: Repository<any>
 
 describe('Product Routes', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(
+      testEnv.postgresHost,
+      testEnv.postgresPort,
+      testEnv.postgresUsername,
+      testEnv.postgresPassword,
+      testEnv.postgresDatabase,
+      testEnv.postgresSchema,
+      [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')],
+      true
+    )
   })
 
   afterAll(async () => {
@@ -22,7 +31,9 @@ describe('Product Routes', () => {
   })
 
   beforeEach(async () => {
-    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository('products_categories_categories')
+    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository(
+      'products_categories_categories'
+    )
     await productsCategoriesCategoriesRepository.delete({})
     productRepository = await PostgresHelper.getRepository(PgProduct)
     await productRepository.delete({})
@@ -47,9 +58,7 @@ describe('Product Routes', () => {
   describe('GET /products', () => {
     test('Should return 200 on success', async () => {
       const app = await buildApp()
-      await request(app)
-        .get('/products')
-        .expect(200)
+      await request(app).get('/products').expect(200)
     })
   })
 
@@ -63,9 +72,7 @@ describe('Product Routes', () => {
         quantity: datatype.number({ min: 1 })
       })
       const app = await buildApp()
-      await request(app)
-        .get(`/products/${product.id}`)
-        .expect(200)
+      await request(app).get(`/products/${product.id}`).expect(200)
     })
   })
 

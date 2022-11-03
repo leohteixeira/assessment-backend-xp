@@ -19,7 +19,21 @@ const makeSut = (): PgProductRepository => {
 
 describe('PgProductRepository', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(
+      testEnv.postgresHost,
+      testEnv.postgresPort,
+      testEnv.postgresUsername,
+      testEnv.postgresPassword,
+      testEnv.postgresDatabase,
+      testEnv.postgresSchema,
+      [
+        path.join(
+          __dirname,
+          '../../../../src/infra/database/entities/*{.js,.ts}'
+        )
+      ],
+      true
+    )
     MockDate.set(new Date())
   })
 
@@ -29,7 +43,9 @@ describe('PgProductRepository', () => {
   })
 
   beforeEach(async () => {
-    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository('products_categories_categories')
+    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository(
+      'products_categories_categories'
+    )
     await productsCategoriesCategoriesRepository.delete({})
     productRepository = await PostgresHelper.getRepository(PgProduct)
     await productRepository.delete({})
@@ -49,7 +65,9 @@ describe('PgProductRepository', () => {
         quantity: datatype.number({ min: 1 }),
         categoryId: [categoryId]
       })
-      await expect(promise).rejects.toThrow(new DatabaseError.NotFound(`"${categoryId}" could not be found`))
+      await expect(promise).rejects.toThrow(
+        new DatabaseError.NotFound(`"${categoryId}" could not be found`)
+      )
     })
 
     test('Should throw DatabaseError.InsertFail if an unexpected error occurs', async () => {
@@ -285,7 +303,10 @@ describe('PgProductRepository', () => {
         quantity: datatype.number({ min: 1 })
       })
       const sut = makeSut()
-      const promise = sut.editProduct({ productId: product.id, categories: ['any_id'] })
+      const promise = sut.editProduct({
+        productId: product.id,
+        categories: ['any_id']
+      })
       await expect(promise).rejects.toThrowError(DatabaseError.UpdateFail)
     })
 
@@ -315,7 +336,10 @@ describe('PgProductRepository', () => {
         categories: [category, category2]
       }
       const sut = makeSut()
-      const updatedProduct = await sut.editProduct({ productId: product.id, ...editProductParams })
+      const updatedProduct = await sut.editProduct({
+        productId: product.id,
+        ...editProductParams
+      })
       expect(updatedProduct).toBeTruthy()
       expect(updatedProduct.name).toBe(editProductParams.name)
       expect(updatedProduct.sku).toBe(editProductParams.sku)
@@ -343,7 +367,9 @@ describe('PgProductRepository', () => {
       })
       const sut = makeSut()
       await sut.removeProduct({ productId: product.id })
-      const removedProduct = await productRepository.findOne({ where: { id: product.id } })
+      const removedProduct = await productRepository.findOne({
+        where: { id: product.id }
+      })
       expect(removedProduct).toBeFalsy()
     })
   })

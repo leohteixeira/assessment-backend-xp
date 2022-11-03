@@ -6,7 +6,21 @@ import path from 'path'
 
 describe('Postgres Helper', () => {
   beforeAll(async () => {
-    await sut.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await sut.connect(
+      testEnv.postgresHost,
+      testEnv.postgresPort,
+      testEnv.postgresUsername,
+      testEnv.postgresPassword,
+      testEnv.postgresDatabase,
+      testEnv.postgresSchema,
+      [
+        path.join(
+          __dirname,
+          '../../../../src/infra/database/entities/*{.js,.ts}'
+        )
+      ],
+      true
+    )
   })
 
   afterAll(async () => {

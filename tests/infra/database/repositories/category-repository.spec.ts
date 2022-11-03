@@ -19,7 +19,21 @@ const makeSut = (): PgCategoryRepository => {
 
 describe('PgCategoryRepository', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(
+      testEnv.postgresHost,
+      testEnv.postgresPort,
+      testEnv.postgresUsername,
+      testEnv.postgresPassword,
+      testEnv.postgresDatabase,
+      testEnv.postgresSchema,
+      [
+        path.join(
+          __dirname,
+          '../../../../src/infra/database/entities/*{.js,.ts}'
+        )
+      ],
+      true
+    )
     MockDate.set(new Date())
   })
 
@@ -33,7 +47,9 @@ describe('PgCategoryRepository', () => {
     await categoryRepository.delete({})
     productRepository = await PostgresHelper.getRepository(PgProduct)
     await productRepository.delete({})
-    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository('products_categories_categories')
+    productsCategoriesCategoriesRepository = await PostgresHelper.getRepository(
+      'products_categories_categories'
+    )
     await productsCategoriesCategoriesRepository.delete({})
   })
 
@@ -228,7 +244,10 @@ describe('PgCategoryRepository', () => {
         code: random.words()
       }
       const sut = makeSut()
-      const updatedCategory = await sut.editCategory({ categoryId: category.id, ...editCategoryParams })
+      const updatedCategory = await sut.editCategory({
+        categoryId: category.id,
+        ...editCategoryParams
+      })
       expect(updatedCategory).toBeTruthy()
       expect(updatedCategory.name).toBe(editCategoryParams.name)
       expect(updatedCategory.code).toBe(editCategoryParams.code)
@@ -249,7 +268,9 @@ describe('PgCategoryRepository', () => {
       })
       const sut = makeSut()
       await sut.removeCategory({ categoryId: category.id })
-      const removedCategory = await categoryRepository.findOne({ where: { id: category.id } })
+      const removedCategory = await categoryRepository.findOne({
+        where: { id: category.id }
+      })
       expect(removedCategory).toBeFalsy()
     })
   })

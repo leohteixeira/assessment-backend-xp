@@ -13,7 +13,16 @@ let categoryRepository: Repository<any>
 
 describe('Category Routes', () => {
   beforeAll(async () => {
-    await PostgresHelper.connect(testEnv.postgresHost, testEnv.postgresPort, testEnv.postgresUsername, testEnv.postgresPassword, testEnv.postgresDatabase, [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')], true)
+    await PostgresHelper.connect(
+      testEnv.postgresHost,
+      testEnv.postgresPort,
+      testEnv.postgresUsername,
+      testEnv.postgresPassword,
+      testEnv.postgresDatabase,
+      testEnv.postgresSchema,
+      [path.join(__dirname, '../../../src/infra/database/entities/*{.js,.ts}')],
+      true
+    )
   })
 
   afterAll(async () => {
@@ -45,18 +54,14 @@ describe('Category Routes', () => {
         code: random.words()
       })
       const app = await buildApp()
-      await request(app)
-        .get(`/categories/${category.id}`)
-        .expect(200)
+      await request(app).get(`/categories/${category.id}`).expect(200)
     })
   })
 
   describe('GET /categories', () => {
     test('Should return 200 on success', async () => {
       const app = await buildApp()
-      await request(app)
-        .get('/categories')
-        .expect(200)
+      await request(app).get('/categories').expect(200)
     })
   })
 
