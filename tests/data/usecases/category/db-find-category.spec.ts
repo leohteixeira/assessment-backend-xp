@@ -27,7 +27,9 @@ describe('DbFindCategory Usecase', () => {
 
   test('Should throw if FindCategoryRepository throws', async () => {
     const { sut, findCategoryRepositorySpy } = makeSut()
-    jest.spyOn(findCategoryRepositorySpy, 'findCategory').mockImplementationOnce(throwError)
+    jest
+      .spyOn(findCategoryRepositorySpy, 'findCategory')
+      .mockImplementationOnce(throwError)
     const promise = sut.find(mockFindCategoryParams())
     await expect(promise).rejects.toThrow()
   })

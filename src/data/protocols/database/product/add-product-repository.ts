@@ -1,7 +1,9 @@
 import { AddProduct } from '@/domain/usecases'
 
 export interface AddProductRepository {
-  add: (params: AddProductRepository.Params) => Promise<AddProductRepository.Result>
+  add: (
+    params: AddProductRepository.Params
+  ) => Promise<AddProductRepository.Result>
 }
 
 export namespace AddProductRepository {

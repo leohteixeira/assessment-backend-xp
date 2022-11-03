@@ -27,9 +27,9 @@ describe('DbEditCategory Usecase', () => {
 
   test('Should throw if EditCategoryRepository throws', async () => {
     const { sut, editCategoryRepositorySpy } = makeSut()
-    jest.spyOn(editCategoryRepositorySpy, 'editCategory').mockImplementationOnce(
-      throwError
-    )
+    jest
+      .spyOn(editCategoryRepositorySpy, 'editCategory')
+      .mockImplementationOnce(throwError)
     const promise = sut.edit(mockEditCategoryParams())
     await expect(promise).rejects.toThrow()
   })

@@ -4,7 +4,7 @@ export interface Validation<T = any> {
 
 export namespace Validation {
   export type BadParams<T> = {
-    [key in keyof T]?: string | BadParams<T[key]>;
+    [key in keyof T]?: string | BadParams<T[key]>
   }
 
   export type Result<T> = Promise<void | Validation.BadParams<T>>

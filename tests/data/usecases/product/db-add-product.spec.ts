@@ -27,9 +27,9 @@ describe('DbAddProduct Usecase', () => {
 
   test('Should throw if AddProductRepository throws', async () => {
     const { sut, addProductRepositorySpy } = makeSut()
-    jest.spyOn(addProductRepositorySpy, 'add').mockImplementationOnce(
-      throwError
-    )
+    jest
+      .spyOn(addProductRepositorySpy, 'add')
+      .mockImplementationOnce(throwError)
     const promise = sut.add(mockAddProductParams())
     await expect(promise).rejects.toThrow()
   })

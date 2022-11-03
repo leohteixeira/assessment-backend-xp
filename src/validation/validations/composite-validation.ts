@@ -1,9 +1,9 @@
 import { Validation } from '@/validation/protocols'
 
 export class CompositeValidation<T> implements Validation<T> {
-  constructor (private readonly validations: Array<Validation<T>>) {}
+  constructor(private readonly validations: Array<Validation<T>>) {}
 
-  async validate (input: T): Validation.Result<T> {
+  async validate(input: T): Validation.Result<T> {
     let result: Validation.BadParams<T> = {}
     for (const validation of this.validations) {
       const error = await validation.validate(input)

@@ -1,5 +1,10 @@
 import { Product } from '@/domain/models'
-import { AddProduct, FindProducts, FindProduct, EditProduct } from '@/domain/usecases'
+import {
+  AddProduct,
+  FindProducts,
+  FindProduct,
+  EditProduct
+} from '@/domain/usecases'
 
 import { datatype, random, date } from 'faker'
 

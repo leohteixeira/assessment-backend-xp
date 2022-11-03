@@ -1,7 +1,9 @@
 import { RemoveProduct } from '@/domain/usecases'
 
 export interface RemoveProductRepository {
-  removeProduct: (params: RemoveProductRepository.Params) => Promise<RemoveProductRepository.Result>
+  removeProduct: (
+    params: RemoveProductRepository.Params
+  ) => Promise<RemoveProductRepository.Result>
 }
 
 export namespace RemoveProductRepository {

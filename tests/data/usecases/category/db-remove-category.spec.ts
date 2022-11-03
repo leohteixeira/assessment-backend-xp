@@ -33,9 +33,9 @@ describe('DbRemoveCategory Usecase', () => {
 
   test('Should throw if RemoveCategoryRepository throws', async () => {
     const { sut, removeCategoryRepositorySpy } = makeSut()
-    jest.spyOn(removeCategoryRepositorySpy, 'removeCategory').mockImplementationOnce(
-      throwError
-    )
+    jest
+      .spyOn(removeCategoryRepositorySpy, 'removeCategory')
+      .mockImplementationOnce(throwError)
     const promise = sut.remove(mockRemoveCategoryParams())
     await expect(promise).rejects.toThrow()
   })

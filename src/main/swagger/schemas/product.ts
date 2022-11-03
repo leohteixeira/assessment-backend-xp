@@ -28,5 +28,14 @@ export const product: OpenAPIV3.SchemaObject = {
       type: 'string'
     }
   },
-  required: ['id', 'name', 'sku', 'price', 'description', 'quantity', 'createdAt', 'updatedAt']
+  required: [
+    'id',
+    'name',
+    'sku',
+    'price',
+    'description',
+    'quantity',
+    'createdAt',
+    'updatedAt'
+  ]
 }

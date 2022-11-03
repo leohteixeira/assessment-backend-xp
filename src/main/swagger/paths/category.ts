@@ -86,7 +86,8 @@ export const findCategoriesPath: OpenAPIV3.PathItemObject = {
   get: {
     tags: ['Categories'],
     summary: 'Requests a category list',
-    description: 'This route returns all categories or a filtered list of categories',
+    description:
+      'This route returns all categories or a filtered list of categories',
     parameters: [
       'searchQuery',
       'searchValueQuery',
@@ -117,7 +118,12 @@ export const findCategoriesPath: OpenAPIV3.PathItemObject = {
                   type: 'number'
                 }
               },
-              required: ['elements', 'totalElements', 'totalPages', 'currentPage']
+              required: [
+                'elements',
+                'totalElements',
+                'totalPages',
+                'currentPage'
+              ]
             }
           }
         }

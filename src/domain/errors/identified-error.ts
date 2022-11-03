@@ -1,5 +1,5 @@
 export abstract class IdentifiedError extends Error {
-  constructor (
+  constructor(
     public readonly type: string,
     public readonly name: string,
     public readonly message: string

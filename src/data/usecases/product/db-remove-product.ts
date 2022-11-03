@@ -2,11 +2,11 @@ import { RemoveProductRepository } from '@/data/protocols'
 import { RemoveProduct } from '@/domain/usecases'
 
 export class DbRemoveProduct implements RemoveProduct {
-  constructor (
+  constructor(
     private readonly removeProductRepository: RemoveProductRepository
   ) {}
 
-  async remove (params: RemoveProduct.Params): Promise<RemoveProduct.Result> {
+  async remove(params: RemoveProduct.Params): Promise<RemoveProduct.Result> {
     await this.removeProductRepository.removeProduct(params)
   }
 }

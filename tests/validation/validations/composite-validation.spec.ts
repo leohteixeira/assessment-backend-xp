@@ -53,9 +53,9 @@ describe('Composite Validation', () => {
 
   test('Should throw if Validation throws', async () => {
     const { sut, validationSpies } = makeSut()
-    jest.spyOn(validationSpies[2], 'validate').mockImplementationOnce(
-      throwError
-    )
+    jest
+      .spyOn(validationSpies[2], 'validate')
+      .mockImplementationOnce(throwError)
 
     const promise = sut.validate(input)
 

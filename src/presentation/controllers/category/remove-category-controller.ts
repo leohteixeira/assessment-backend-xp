@@ -5,12 +5,14 @@ import { Http } from '@/presentation/protocols'
 import { Validation } from '@/validation/protocols'
 
 export class RemoveCategoryController implements Http.Controller {
-  constructor (
+  constructor(
     private readonly validation: Validation<RemoveCategoryController.Request>,
     private readonly removeCategory: RemoveCategory
   ) {}
 
-  async handle (request: RemoveCategoryController.Request): Promise<Http.Response<RemoveCategoryController.Response>> {
+  async handle(
+    request: RemoveCategoryController.Request
+  ): Promise<Http.Response<RemoveCategoryController.Response>> {
     try {
       const badParams = await this.validation.validate(request)
       if (badParams) return new HttpError.BadRequest(badParams)

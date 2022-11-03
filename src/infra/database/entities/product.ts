@@ -1,6 +1,14 @@
 import { PgCategory } from '@/infra/database/entities'
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn
+} from 'typeorm'
 
 @Entity({ name: 'products' })
 export class PgProduct {
@@ -28,7 +36,7 @@ export class PgProduct {
   @UpdateDateColumn()
   updatedAt: Date
 
-  @ManyToMany(() => PgCategory, category => category.products)
+  @ManyToMany(() => PgCategory, (category) => category.products)
   @JoinTable()
   categories: PgCategory[]
 }

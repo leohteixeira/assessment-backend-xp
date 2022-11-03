@@ -5,7 +5,8 @@ import { throwError } from '@/tests/utils'
 import { mockEditCategoryParams } from '@/tests/domain/mocks'
 import { ValidationSpy } from '@/tests/validation/mocks'
 
-const mockRequest = (): EditCategoryController.Request => mockEditCategoryParams()
+const mockRequest = (): EditCategoryController.Request =>
+  mockEditCategoryParams()
 
 type SutTypes = {
   sut: EditCategoryController
@@ -44,9 +45,7 @@ describe('EditCategory Controller', () => {
 
   test('Should return ServerError if validation throws', async () => {
     const { sut, validationSpy } = makeSut()
-    jest.spyOn(validationSpy, 'validate').mockImplementationOnce(
-      throwError
-    )
+    jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
     const result = await sut.handle(mockRequest())
     expect(result).toBeInstanceOf(HttpError.Server)
   })

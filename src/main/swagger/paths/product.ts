@@ -64,7 +64,8 @@ export const findProductsPath: OpenAPIV3.PathItemObject = {
   get: {
     tags: ['Products'],
     summary: 'Requests a product list',
-    description: 'This route returns all products or a filtered list of products',
+    description:
+      'This route returns all products or a filtered list of products',
     parameters: [
       'searchQuery',
       'searchValueQuery',
@@ -95,7 +96,12 @@ export const findProductsPath: OpenAPIV3.PathItemObject = {
                   type: 'number'
                 }
               },
-              required: ['elements', 'totalElements', 'totalPages', 'currentPage']
+              required: [
+                'elements',
+                'totalElements',
+                'totalPages',
+                'currentPage'
+              ]
             }
           }
         }

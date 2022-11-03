@@ -5,12 +5,14 @@ import { Http } from '@/presentation/protocols'
 import { Validation } from '@/validation/protocols'
 
 export class AddCategoryController implements Http.Controller {
-  constructor (
+  constructor(
     private readonly validation: Validation<AddCategoryController.Request>,
     private readonly addCategory: AddCategory
   ) {}
 
-  async handle (request: AddCategoryController.Request): Promise<Http.Response<AddCategoryController.Response>> {
+  async handle(
+    request: AddCategoryController.Request
+  ): Promise<Http.Response<AddCategoryController.Response>> {
     try {
       const badParams = await this.validation.validate(request)
       if (badParams) return new HttpError.BadRequest(badParams)

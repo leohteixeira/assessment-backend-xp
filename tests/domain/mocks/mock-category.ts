@@ -1,5 +1,10 @@
 import { Category } from '@/domain/models'
-import { AddCategory, FindCategory, FindCategories, EditCategory } from '@/domain/usecases'
+import {
+  AddCategory,
+  FindCategory,
+  FindCategories,
+  EditCategory
+} from '@/domain/usecases'
 
 import { datatype, date, random } from 'faker'
 

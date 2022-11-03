@@ -1,4 +1,3 @@
-
 export namespace RequestQuery {
   export interface Search {
     search: string

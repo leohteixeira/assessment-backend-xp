@@ -1,7 +1,8 @@
 import { Invalidation } from '@/validation/helpers'
 import { NumberValidator, NumberValidatorParams } from '@/validation/validators'
 
-const makeSut = (params?: NumberValidatorParams): NumberValidator => new NumberValidator(params)
+const makeSut = (params?: NumberValidatorParams): NumberValidator =>
+  new NumberValidator(params)
 
 describe('Number Validator', () => {
   describe('minValue', () => {

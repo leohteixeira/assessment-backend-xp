@@ -2,21 +2,22 @@ import { Invalidation } from '@/validation/helpers'
 import { ArrayValidator, ArrayValidatorParams } from '@/validation/validators'
 import { ValidatorSpy } from '@/tests/validation/mocks'
 
-const makeSut = (params?: ArrayValidatorParams): ArrayValidator => new ArrayValidator(params)
+const makeSut = (params?: ArrayValidatorParams): ArrayValidator =>
+  new ArrayValidator(params)
 
 describe('Array Validator', () => {
   describe('itemValidator', () => {
     const validatorSpy = new ValidatorSpy()
-    jest.spyOn(validatorSpy, 'validate').mockImplementation(
-      async (item) => {
-        if (typeof item !== 'string') return 'error'
-      }
-    )
+    jest.spyOn(validatorSpy, 'validate').mockImplementation(async (item) => {
+      if (typeof item !== 'string') return 'error'
+    })
 
     test('Should return invalid if one item is invalid', async () => {
       const sut = makeSut({ itemsValidator: validatorSpy })
       const result = await sut.validate(['string', 1])
-      expect(result).toEqual(Invalidation.invalidArrayIndex(1, JSON.stringify('error')))
+      expect(result).toEqual(
+        Invalidation.invalidArrayIndex(1, JSON.stringify('error'))
+      )
     })
 
     test('Should return void if all items are valid', async () => {

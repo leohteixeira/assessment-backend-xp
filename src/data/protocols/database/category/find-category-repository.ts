@@ -1,7 +1,9 @@
 import { FindCategory } from '@/domain/usecases'
 
 export interface FindCategoryRepository {
-  findCategory: (params: FindCategoryRepository.Params) => Promise<FindCategoryRepository.Result>
+  findCategory: (
+    params: FindCategoryRepository.Params
+  ) => Promise<FindCategoryRepository.Result>
 }
 
 export namespace FindCategoryRepository {

@@ -1,7 +1,9 @@
 import { FindProduct } from '@/domain/usecases'
 
 export interface FindProductRepository {
-  findProduct: (params: FindProductRepository.Params) => Promise<FindProductRepository.Result>
+  findProduct: (
+    params: FindProductRepository.Params
+  ) => Promise<FindProductRepository.Result>
 }
 
 export namespace FindProductRepository {

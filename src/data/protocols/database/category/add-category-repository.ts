@@ -1,7 +1,9 @@
 import { AddCategory } from '@/domain/usecases'
 
 export interface AddCategoryRepository {
-  add: (params: AddCategoryRepository.Params) => Promise<AddCategoryRepository.Result>
+  add: (
+    params: AddCategoryRepository.Params
+  ) => Promise<AddCategoryRepository.Result>
 }
 
 export namespace AddCategoryRepository {

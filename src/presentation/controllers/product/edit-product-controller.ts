@@ -5,12 +5,14 @@ import { Http } from '@/presentation/protocols'
 import { Validation } from '@/validation/protocols'
 
 export class EditProductController implements Http.Controller {
-  constructor (
+  constructor(
     private readonly validation: Validation<EditProductController.Request>,
     private readonly editProduct: EditProduct
   ) {}
 
-  async handle (request: EditProductController.Request): Promise<Http.Response<EditProductController.Response>> {
+  async handle(
+    request: EditProductController.Request
+  ): Promise<Http.Response<EditProductController.Response>> {
     try {
       const badParams = await this.validation.validate(request)
       if (badParams) return new HttpError.BadRequest(badParams)

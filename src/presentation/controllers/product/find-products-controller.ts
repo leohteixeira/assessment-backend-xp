@@ -6,12 +6,14 @@ import { Http } from '@/presentation/protocols'
 import { Validation } from '@/validation/protocols'
 
 export class FindProductsController implements Http.Controller {
-  constructor (
+  constructor(
     private readonly validation: Validation<FindProductsController.Request>,
     private readonly findProducts: FindProducts
   ) {}
 
-  async handle (request: FindProductsController.Request): Promise<Http.Response<FindProductsController.Response>> {
+  async handle(
+    request: FindProductsController.Request
+  ): Promise<Http.Response<FindProductsController.Response>> {
     try {
       const badParams = await this.validation.validate(request)
       if (badParams) return new HttpError.BadRequest(badParams)
@@ -26,6 +28,8 @@ export class FindProductsController implements Http.Controller {
 }
 
 export namespace FindProductsController {
-  export type Request = Partial<RequestQuery.Search & RequestQuery.Limit & RequestQuery.Page>
+  export type Request = Partial<
+    RequestQuery.Search & RequestQuery.Limit & RequestQuery.Page
+  >
   export type Response = FindProducts.Result
 }

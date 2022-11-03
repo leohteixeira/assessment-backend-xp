@@ -5,17 +5,21 @@ import { Http } from '@/presentation/protocols'
 import { Validation } from '@/validation/protocols'
 
 export class FindProductController implements Http.Controller {
-  constructor (
+  constructor(
     private readonly validation: Validation<FindProductController.Request>,
     private readonly findProduct: FindProduct
   ) {}
 
-  async handle (request: FindProductController.Request): Promise<Http.Response<FindProductController.Response>> {
+  async handle(
+    request: FindProductController.Request
+  ): Promise<Http.Response<FindProductController.Response>> {
     try {
       const badParams = await this.validation.validate(request)
       if (badParams) return new HttpError.BadRequest(badParams)
 
-      const result = await this.findProduct.find({ productId: request.productId })
+      const result = await this.findProduct.find({
+        productId: request.productId
+      })
 
       return ok(result)
     } catch (error) {

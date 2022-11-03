@@ -23,9 +23,7 @@ describe('ObjectKey Validation', () => {
 
     test('should return an error if Validator returns an error', async () => {
       const { sut, validatorSpy } = makeSut()
-      jest.spyOn(validatorSpy, 'validate').mockResolvedValueOnce(
-        'error_name'
-      )
+      jest.spyOn(validatorSpy, 'validate').mockResolvedValueOnce('error_name')
 
       const result = await sut.validate(input)
 
@@ -50,9 +48,7 @@ describe('ObjectKey Validation', () => {
 
     test('Should throw if Validator throws', async () => {
       const { sut, validatorSpy } = makeSut()
-      jest.spyOn(validatorSpy, 'validate').mockImplementationOnce(
-        throwError
-      )
+      jest.spyOn(validatorSpy, 'validate').mockImplementationOnce(throwError)
 
       const promise = sut.validate(input)
 
@@ -111,9 +107,7 @@ describe('ObjectKey Validation', () => {
 
     test('Should throw if Validation throws', async () => {
       const { sut, validationSpy } = makeSut()
-      jest.spyOn(validationSpy, 'validate').mockImplementationOnce(
-        throwError
-      )
+      jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
 
       const promise = sut.validate(input)
 
