@@ -10,6 +10,9 @@
     "@typescript-eslint/no-invalid-void-type": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "import/export": "off"
+    "import/export": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/brace-style": "off"
   }
 }

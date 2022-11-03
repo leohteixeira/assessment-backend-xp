@@ -14,6 +14,7 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test --findRelatedTests",
     "test:ci": "npm test --coverage",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "prepare": "husky install"
   },
   "repository": {
@@ -48,6 +49,7 @@
     "lint-staged": "^12.3.4",
     "mockdate": "^3.0.5",
     "openapi-types": "^10.0.0",
+    "prettier": "2.7.1",
     "rimraf": "^2.6.3",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.3",
