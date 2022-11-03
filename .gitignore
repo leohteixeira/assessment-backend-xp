@@ -1,4 +1,4 @@
 node_modules
 dist
 coverage
-.docker
+.docker/db_data
